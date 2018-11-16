@@ -43,10 +43,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="Information" destination="6Yv-mm-CAA" id="YxV-7U-b9s"/>
-                        <outlet property="Label1" destination="6Yv-mm-CAA" id="8c6-Dn-saO"/>
-                        <outlet property="Label2" destination="pTQ-yC-AN6" id="VmJ-Gp-cvG"/>
-                        <outlet property="Patterns" destination="pTQ-yC-AN6" id="aDf-1p-W8H"/>
+                        <outlet property="InformationLabel" destination="pTQ-yC-AN6" id="Vfs-IU-crG"/>
+                        <outlet property="PatternTab" destination="adS-GG-Lgh" id="uAs-Tf-cEE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

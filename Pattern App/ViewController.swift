@@ -35,6 +35,7 @@ class ViewController: UIViewController {
         do{
             if(state == true){
                 print("Button Pressed")
+                print("Red")
                 try led2.setState(true)
             }
             else{
@@ -54,6 +55,7 @@ class ViewController: UIViewController {
             
             if(state == true){
                 print("Button Pressed")
+                print("Green")
                 try led3.setState(true)
             }
             else{
@@ -69,7 +71,10 @@ class ViewController: UIViewController {
     }
     
     
-
+    @IBOutlet var PatternTab: UILabel!
+    
+    @IBOutlet var InformationLabel: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

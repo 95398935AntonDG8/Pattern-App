@@ -13,6 +13,8 @@
 		FA09A722219E18AD00719FB1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA09A720219E18AD00719FB1 /* Main.storyboard */; };
 		FA09A724219E18AD00719FB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA09A723219E18AD00719FB1 /* Assets.xcassets */; };
 		FA09A727219E18AD00719FB1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA09A725219E18AD00719FB1 /* LaunchScreen.storyboard */; };
+		FA6578D8219F5E48007AF0A9 /* Pattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6578D7219F5E48007AF0A9 /* Pattern.swift */; };
+		FA6578DA219F5ED8007AF0A9 /* PatternBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6578D9219F5ED8007AF0A9 /* PatternBank.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		FA09A723219E18AD00719FB1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA09A726219E18AD00719FB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA09A728219E18AD00719FB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA6578D7219F5E48007AF0A9 /* Pattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pattern.swift; sourceTree = "<group>"; };
+		FA6578D9219F5ED8007AF0A9 /* PatternBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternBank.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +88,8 @@
 				FA09A723219E18AD00719FB1 /* Assets.xcassets */,
 				FA09A725219E18AD00719FB1 /* LaunchScreen.storyboard */,
 				FA09A728219E18AD00719FB1 /* Info.plist */,
+				FA6578D7219F5E48007AF0A9 /* Pattern.swift */,
+				FA6578D9219F5ED8007AF0A9 /* PatternBank.swift */,
 			);
 			path = "Pattern App";
 			sourceTree = "<group>";
@@ -208,7 +214,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA6578D8219F5E48007AF0A9 /* Pattern.swift in Sources */,
 				FA09A71F219E18AD00719FB1 /* ViewController.swift in Sources */,
+				FA6578DA219F5ED8007AF0A9 /* PatternBank.swift in Sources */,
 				FA09A71D219E18AD00719FB1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
