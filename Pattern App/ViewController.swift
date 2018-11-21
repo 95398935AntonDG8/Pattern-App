@@ -7,7 +7,16 @@ class ViewController: UIViewController {
     let led3 = DigitalOutput()
     let button0 = DigitalInput()
     let button1 = DigitalInput()
+    let allPatterns = PatternBank()
+    var patternNumber : Int = 0
+    var pickedAnswer1 : Bool = false
+    var pickedAnswer2 : Bool = false
+    var pickedAnswer3 : Bool = false
+    var pickedAnswer4 : Bool = false
+    var buttonOrder : Int = 0
     
+   
+
     func attach_handler(sender: Phidget){
         do{
             if(try sender.getHubPort() == 0){
@@ -70,10 +79,12 @@ class ViewController: UIViewController {
         }
     }
     
+
     
     @IBOutlet var PatternTab: UILabel!
     
     @IBOutlet var InformationLabel: UILabel!
+    
     
     
     override func viewDidLoad() {
@@ -128,3 +139,4 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 }
+
