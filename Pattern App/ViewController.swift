@@ -3,34 +3,94 @@ import Phidget22Swift
 
 class ViewController: UIViewController {
     
-    let led2 = DigitalOutput()
-    let led3 = DigitalOutput()
     let button0 = DigitalInput()
     let button1 = DigitalInput()
+    let led1 = DigitalOutput()
+    let led2 = DigitalOutput()
     let allPatterns = PatternBank()
     var patternNumber : Int = 0
     var pickedAnswer1 : Bool = false
     var pickedAnswer2 : Bool = false
     var pickedAnswer3 : Bool = false
     var pickedAnswer4 : Bool = false
-    var buttonOrder : Int = 0
+    var buttonSet : Int = 0
+    var score : Int = 0
     
    
-
-    func attach_handler(sender: Phidget){
-        do{
-            if(try sender.getHubPort() == 0){
-                print("led2 Attached")
+    
+    @IBOutlet weak var informationLabel: UILabel!
+    @IBOutlet weak var patternTypeLabel: UILabel!
+    @IBOutlet weak var scoreLabel: UILabel!
+    
+    
+    func patternChange() {
+        DispatchQueue.main.async {
+            self.patternTypeLabel.text = self.allPatterns.list[self.patternNumber].patternText
+            self.informationLabel.text = "The Pattern Has Began. Repeat The Pattern"
+        }
+        
+    }
+    
+    
+    
+    func checkAnswer() {
+        
+        let correctAnswer1 = allPatterns.list[patternNumber].answer1
+        let correctAnswer2 = allPatterns.list[patternNumber].answer2
+        let correctAnswer3 = allPatterns.list[patternNumber].answer3
+        let correctAnswer4 = allPatterns.list[patternNumber].answer4
+        
+        if (correctAnswer1 == pickedAnswer1 && correctAnswer2 == pickedAnswer2 && correctAnswer3 == pickedAnswer3 && correctAnswer4 == pickedAnswer4)  {
+            print("Correct")
+            score += 10
+            DispatchQueue.main.async {
+                self.informationLabel.text = "You Are Right!"
+                self.patternTypeLabel.text = "If you want to restart press any button."
+                self.scoreLabel.text = "Score: \(self.score )"
+                
             }
-            else{
-                print("button0 Attached")
+        }
+            
+        else{
+            print("Wrong")
+            DispatchQueue.main.async {
+                self.informationLabel.text = "You Are Wrong Try Again."
+                self.patternTypeLabel.text = "If you want to restart press any button."
             }
             
-            if(try sender.getHubPort() == 1){
-                print("led3 Attached")
+            // GET READY TO RESTART THE GAME HERE
+            startOver()
+            
+            
+        }
+        
+    }
+    
+    
+    
+    func startOver() {
+        buttonSet = 0
+        DispatchQueue.main.async {
+            self.informationLabel.text = "Look at the pattern and repeat0 it using the buttons. Press any button to start the game."
+            self.patternTypeLabel.text = "The Pattern is displayed here."
+        }
+    }
+    
+    
+    
+    
+    func attach_handler_button0(sender: Phidget){
+        do{
+            let hubPort = try sender.getHubPort()
+            
+            if(hubPort == 0){
+                
+                print("Button 0 attached")
+                
             }
+                
             else{
-                print("button1 Attached")
+                print("Led 1 attached")
             }
             
         } catch let err as PhidgetError{
@@ -40,69 +100,145 @@ class ViewController: UIViewController {
         }
     }
     
-    func state_change_button1(sender: DigitalInput, state: Bool){
+    
+    func attach_handler_button1(sender: Phidget){
         do{
-            if(state == true){
-                print("Button Pressed")
-                print("Red")
-                try led2.setState(true)
+            let hubPort = try sender.getHubPort()
+            
+            if(hubPort == 1){
+                print("Button 1 attached")
             }
+                
             else{
-                print("Button Not Pressed")
+                print("Led 2 attached")
+            }
+            
+        } catch let err as PhidgetError{
+            print("Phidget Error " + err.description)
+        } catch{
+            //catch other errors here
+        }
+    }
+    
+    
+    
+    
+    func state_change_button0(sender:DigitalInput, state:Bool){
+        
+        
+        do {
+            if(state == true){
+                print("Button Red Pressed")
+                try led1.setState(true)
+                
+                if(buttonSet == 0){
+                    patternChange()
+                    buttonSet+=1
+                }
+                    
+                else if (buttonSet == 1){
+                    pickedAnswer1 = true
+                    buttonSet+=1
+                }
+                    
+                else if (buttonSet == 2){
+                    pickedAnswer2 = true
+                    buttonSet+=1
+                }
+                    
+                else if (buttonSet == 3){
+                    pickedAnswer3 = true
+                    buttonSet+=1
+                }
+                    
+                else if (buttonSet == 4){
+                    pickedAnswer4 = true
+                    checkAnswer()
+                    
+                }
+                else if (buttonSet == 5){
+                    startOver()
+                }
+            }
+                
+            else{
+                print("Button Red is Released")
+                try led1.setState(false)
+                
+            }
+            
+        }catch let err as PhidgetError{
+            print("Phidget Error" + err.description)
+        } catch{
+            
+        }
+    }
+    
+    
+    
+    func state_change_button1(sender:DigitalInput, state:Bool){
+        do {
+            if(state == true){
+                print("Button Green Pressed")
+                try led2.setState(true)
+                
+                if(buttonSet == 0){
+                    patternChange()
+                    buttonSet+=1
+                }
+                    
+                else if (buttonSet == 1){
+                    pickedAnswer1 = false
+                    buttonSet+=1
+                    
+                }
+                    
+                else if (buttonSet == 2){
+                    pickedAnswer2 = false
+                    buttonSet+=1
+                }
+                    
+                else if (buttonSet == 3){
+                    pickedAnswer3 = false
+                    buttonSet+=1
+                }
+                    
+                else if (buttonSet == 4){
+                    pickedAnswer4 = false
+                    checkAnswer()
+                    
+                }
+                else if (buttonSet == 5){
+                    startOver()
+                }
+                
+            }
+                
+            else{
+                print("Button Green is Released")
                 try led2.setState(false)
             }
-            
         } catch let err as PhidgetError{
-            print("Phidget Error " + err.description)
+            print("Phidget Error" + err.description)
         } catch{
-            //catch other errors here
+            
         }
     }
-    
-    func state_change_button0(sender: DigitalInput, state: Bool){
-        do{
-            
-            if(state == true){
-                print("Button Pressed")
-                print("Green")
-                try led3.setState(true)
-            }
-            else{
-                print("Button Not Pressed")
-                try led3.setState(false)
-            }
-            
-        } catch let err as PhidgetError{
-            print("Phidget Error " + err.description)
-        } catch{
-            //catch other errors here
-        }
-    }
-    
-
-    
-    @IBOutlet var PatternTab: UILabel!
-    
-    @IBOutlet var InformationLabel: UILabel!
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        
+        informationLabel.text = "Watch the pattern and repeat it using the buttons. Press the red or green button to start the game."
+        patternTypeLabel.text = "The Pattern will be displayed here."
+        scoreLabel.text = "Score:0"
+        
         
         do{
             //enable server discovery
             try Net.enableServerDiscovery(serverType: .deviceRemote)
             
-            //address objects
-            try led2.setDeviceSerialNumber(528005)
-            try led2.setHubPort(2)
-            try led2.setIsHubPortDevice(true)
-            
-            try led3.setDeviceSerialNumber(528005)
-            try led3.setHubPort(3)
-            try led3.setIsHubPortDevice(true)
-            
+            //address object
             try button0.setDeviceSerialNumber(528005)
             try button0.setHubPort(0)
             try button0.setIsHubPortDevice(true)
@@ -111,32 +247,41 @@ class ViewController: UIViewController {
             try button1.setHubPort(1)
             try button1.setIsHubPortDevice(true)
             
-            //add attach handlers
-            let _ = led2.attach.addHandler(attach_handler)
-            let _ = led3.attach.addHandler(attach_handler)
-            let _ = button0.attach.addHandler(attach_handler)
-            let _ = button1.attach.addHandler(attach_handler)
+            try led1.setDeviceSerialNumber(528005)
+            try led1.setHubPort(2)
+            try led1.setIsHubPortDevice(true)
+            
+            try led2.setDeviceSerialNumber(528005)
+            try led2.setHubPort(3)
+            try led2.setIsHubPortDevice(true)
+            
+            
+            //add attach hangler
+            let _ = button0.attach.addHandler(attach_handler_button0)
+            let _ = button1.attach.addHandler(attach_handler_button1)
+            let _ = led1.attach.addHandler(attach_handler_button0)
+            let _ = led2.attach.addHandler(attach_handler_button1)
+            
             
             //add state change handler
-            let _ = button0.stateChange.addHandler(state_change_button1)
-            let _ = button1.stateChange.addHandler(state_change_button0)
+            let _ = button0.stateChange.addHandler(state_change_button0)
+            let _ = button1.stateChange.addHandler(state_change_button1)
             
             //open objects
             try button0.open()
             try button1.open()
+            try led1.open()
             try led2.open()
-            try led3.open()
             
-        } catch let err as PhidgetError {
-            print("Phidget Error" + err.description)
-        } catch {
+        }catch let err as PhidgetError {
+            print("Phidget Error " + err.description)
+        }catch {
             //catch other errors here
         }
+        
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    
 }
+
 
